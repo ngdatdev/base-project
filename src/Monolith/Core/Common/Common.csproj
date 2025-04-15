@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\BaseApiReference\BaseApiReference.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Applications\SQLs\" />
+    <Folder Include="Applications\Repositories\" />
+    <Folder Include="Applications\Pagination\" />
+    <Folder Include="Filters\" />
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
+  <PropertyGroup Label="Custom">
+    <AppProjectName>Common</AppProjectName>
+  </PropertyGroup>
+
+</Project>

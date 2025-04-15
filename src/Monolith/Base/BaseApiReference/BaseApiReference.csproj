@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Config\Config.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\BackgroundJob\" />
+    <Folder Include="Abstractions\Csv\" />
+    <Folder Include="Abstractions\Excel\" />
+    <Folder Include="Abstractions\HealthChecks\" />
+    <Folder Include="Abstractions\Identity\" />
+    <Folder Include="Abstractions\Interceptors\" />
+    <Folder Include="Abstractions\Logging\" />
+    <Folder Include="Abstractions\MessageBrokers\" />
+    <Folder Include="Abstractions\Monitoring\" />
+    <Folder Include="Abstractions\Pdf\" />
+    <Folder Include="Metadata\" />
+  </ItemGroup>
+
+</Project>

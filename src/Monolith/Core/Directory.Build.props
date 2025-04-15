@@ -1,0 +1,18 @@
+<Project>
+    <!-- General config -->
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>CS1591;CS1573;RCS1079;IDE0022</NoWarn>
+        <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference
+			Include="..\Common\Common.csproj"
+			Condition="'$(AppProjectName)' != 'Common'" />
+	</ItemGroup>
+</Project>
