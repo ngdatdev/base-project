@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace Common.Features;
 
 /// <summary>
-///    Implement of IDispatcher.
+/// Implement of IDispatcher.
 /// </summary>
 public class Dispatcher : IDispatcher
 {

@@ -1,33 +1,55 @@
+using System.Text;
 using Common.RegisterServices;
 using Infrastructure.ServiceRegister;
 
+// Default setting.
+Console.OutputEncoding = Encoding.UTF8;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddAuthorization();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
-
+// Register services to the container.
 services.RegisterCore(configuration);
 services.RegisterInfrastructure(configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//app.UseMiddleware<GlobalExceptionHandler>();
+
+// Enable Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(setupAction: options =>
+    {
+        options.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "v1");
+        options.RoutePrefix = "swagger";
+        options.DefaultModelsExpandDepth(depth: -1);
+    });
 }
 
+// Redirect HTTP to HTTPS
 app.UseHttpsRedirection();
 
+// Enable CORS
+app.UseCors();
+
+// Enable response caching
+app.UseResponseCaching();
+
+// Rate limiting
+app.UseRateLimiter();
+
+// Authentication
+app.UseAuthentication();
+
+// Authorization
 app.UseAuthorization();
 
+// Map endpoints to controllers
 app.MapControllers();
-app.Run();
+
+// Run app
+await app.RunAsync(CancellationToken.None);

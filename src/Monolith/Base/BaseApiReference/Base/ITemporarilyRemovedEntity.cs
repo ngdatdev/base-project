@@ -3,9 +3,9 @@
 namespace BaseApiReference.Base;
 
 /// <summary>
-///     Use in case the entity requires the information
-///     about the person removing the entity temporarily
-///     and the time is it temporarily removed.
+/// Use in case the entity requires the information
+/// about the person removing the entity temporarily
+/// and the time is it temporarily removed.
 /// </summary>
 internal interface ITemporarilyRemovedEntity
 {

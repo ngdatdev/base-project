@@ -4,7 +4,7 @@ using System.Globalization;
 namespace Common.Helper;
 
 /// <summary>
-///     Decima lUtil.
+/// Decimal Util.
 /// </summary>
 public class DecimalUtil
 {

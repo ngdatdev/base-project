@@ -3,12 +3,12 @@
 namespace BaseApiReference.Abstractions.Notification.SMS;
 
 /// <summary>
-///     Interface for SMS Handler
+/// Interface for SMS Handler
 /// </summary>
 public interface ISMSHandler
 {
     /// <summary>
-    ///     Send SMS Notifications.
+    /// Send SMS Notifications.
     /// </summary>
     /// <param name="to"></param>
     /// <param name="body"></param>

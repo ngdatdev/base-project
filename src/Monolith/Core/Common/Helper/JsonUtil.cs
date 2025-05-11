@@ -2,7 +2,10 @@
 
 namespace Common.Helper;
 
-internal class JsonUtil
+/// <summary>
+/// Json Util.
+/// </summary>
+public class JsonUtil
 {
     public static string ToJson(object obj) => JsonSerializer.Serialize(obj);
 

@@ -8,5 +8,5 @@ public enum TwoFAMethod
     Email,
     SMS,
     TOTP,
-    Backup
+    Backup,
 }

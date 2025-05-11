@@ -3,7 +3,7 @@
 namespace Common.Features;
 
 /// <summary>
-///     Abstract for feature request validators.
+/// Abstract for feature request validators.
 /// </summary>
 public abstract class Validator<TRequest, TResponse> : AbstractValidator<TRequest>
     where TRequest : class, IRequest<TResponse>

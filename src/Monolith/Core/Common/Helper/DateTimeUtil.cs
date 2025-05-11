@@ -2,6 +2,9 @@
 
 namespace Common.Helper;
 
+/// <summary>
+/// DateTime Util.
+/// </summary>
 public static class DateTimeUtil
 {
     public static string ToReadableFormat(DateTime date) => date.ToString("dd/MM/yyyy HH:mm");

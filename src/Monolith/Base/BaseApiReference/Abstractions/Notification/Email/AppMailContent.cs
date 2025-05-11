@@ -1,7 +1,7 @@
 ﻿namespace BaseApiReference.Abstractions.Notification.Email;
 
 /// <summary>
-///     Represent the mail content model.
+/// Represent the mail content model.
 /// </summary>
 public sealed class AppMailContent
 {

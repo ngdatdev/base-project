@@ -3,9 +3,9 @@
 namespace BaseApiReference.Base;
 
 /// <summary>
-///     Use in case the entity requires the information
-///     about the person creating the entity and the time
-///     is it created.
+///  Use in case the entity requires the information
+///  about the person creating the entity and the time
+///  is it created.
 /// </summary>
 internal interface ICreatedEntity
 {

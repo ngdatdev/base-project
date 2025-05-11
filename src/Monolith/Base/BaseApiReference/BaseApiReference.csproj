@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Config\Config.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Abstractions\BackgroundJob\" />
     <Folder Include="Abstractions\Csv\" />
     <Folder Include="Abstractions\Excel\" />

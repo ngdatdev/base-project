@@ -1,5 +1,8 @@
 ﻿namespace BaseApiReference.Abstractions.Caching;
 
+/// <summary>
+/// Caching options
+/// </summary>
 public class AppCacheOption
 {
     private int _failSafeMaxDurationInSeconds;

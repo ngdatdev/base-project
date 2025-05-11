@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Common.Features;
 
 /// <summary>
-///     Interface for handling requests.
+/// Interface for handling requests.
 /// </summary>
 public interface IHandler<in TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>

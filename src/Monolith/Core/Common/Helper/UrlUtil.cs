@@ -4,6 +4,9 @@ using System.Web;
 
 namespace Common.Helper;
 
+/// <summary>
+/// Url Util.
+/// </summary>
 public static class UrlUtil
 {
     public static string BuildQuery(Dictionary<string, string> query)

@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Common.Helper;
 
+/// <summary>
+/// Random Util.
+/// </summary>
 public static class RandomUtil
 {
     private static readonly Random _rand = new();

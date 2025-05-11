@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Common.Helper;
 
+/// <summary>
+/// Enum Util.
+/// </summary>
 public static class EnumUtil
 {
     public static string GetName<T>(T enumVal)

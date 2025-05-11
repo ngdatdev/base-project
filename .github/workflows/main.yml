@@ -1,0 +1,32 @@
+name: BookShop | ©2024 by Nguyen Dat
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore src/External/Presentation/BookShop.API/BookShop.API.csproj
+
+    - name: Build
+      run: dotnet build src/External/Presentation/BookShop.API/BookShop.API.csproj --configuration Release
+
+    - name: Run unit tests
+      run: dotnet test test/BookShop.UnitTests/BookShop.UnitTests.csproj
+
+    - name: Run architecture tests
+      run: dotnet test test/BookShop.ArchitectureTests/BookShop.ArchitectureTests.csproj

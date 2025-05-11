@@ -5,7 +5,7 @@ using System.Linq;
 namespace Common.Helper;
 
 /// <summary>
-///     Collection Util.
+/// Collection Util.
 /// </summary>
 public static class CollectionUtil
 {

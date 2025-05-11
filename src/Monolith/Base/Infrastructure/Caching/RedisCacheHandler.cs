@@ -9,7 +9,7 @@ using PenomyAPI.App.Common.Caching;
 namespace Infrastructure.Caching;
 
 /// <summary>
-///     Implementation of cache handler using redis as storage.
+/// Implementation of cache handler using redis as storage.
 /// </summary>
 public sealed class RedisCacheHandler : ICacheHandler
 {

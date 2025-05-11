@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Common.Helper;
 
+/// <summary>
+/// Email Util.
+/// </summary>
 public class EmailUtil
 {
     public static bool IsValid(string email)

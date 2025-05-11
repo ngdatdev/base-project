@@ -2,6 +2,9 @@
 
 namespace Common.Helper;
 
+/// <summary>
+/// Phone Util.
+/// </summary>
 public static class PhoneUtil
 {
     public static string Format(string phone) => Regex.Replace(phone, "[^0-9]", "");

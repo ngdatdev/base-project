@@ -5,7 +5,7 @@ using PenomyAPI.App.Common.Caching;
 namespace Infrastructure.Caching;
 
 /// <summary>
-///     Caching Extention
+///  Caching Extention
 /// </summary>
 public static class CachingExtention
 {

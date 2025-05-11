@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
 using Common.Features;
+using Common.ServiceRegister;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,11 +19,22 @@ public static class ServiceRegister
 {
     public static IServiceCollection RegisterCore(
         this IServiceCollection services,
-        IConfiguration configuration
+        IConfigurationManager configuration
     )
     {
+        // Register common services
         AddDispatcherService(services);
         AddHandlerService(services);
+
+        // Register custom api services
+        services.AddBaseController();
+        services.AddAuthentication(configuration);
+        services.AddAuthorizations();
+        services.AddCORS();
+        services.AddLoggings();
+        services.AddRateLimiter(configuration);
+        services.AddResponseCachings();
+        services.AddSwagger(configuration);
 
         return services;
     }

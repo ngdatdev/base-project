@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Persistence.PostgreSQL.DbContext;
 
 /// <summary>
-///     Implementation of database context.
+/// Implementation of database context.
 /// </summary>
 public class AppDbContext : IdentityDbContext<User, Role, long>
 {
@@ -14,10 +14,10 @@ public class AppDbContext : IdentityDbContext<User, Role, long>
         : base(options) { }
 
     /// <summary>
-    ///     Configure tables and seed initial data here.
+    /// Configure tables and seed initial data here.
     /// </summary>
     /// <param name="builder">
-    ///     Model builder access the database.
+    /// Model builder access the database.
     /// </param>
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -34,10 +34,10 @@ public class AppDbContext : IdentityDbContext<User, Role, long>
     }
 
     /// <summary>
-    ///     Remove "AspNet" prefix in identity table name.
+    /// Remove "AspNet" prefix in identity table name.
     /// </summary>
     /// <param name="builder">
-    ///     Model builder access the database.
+    /// Model builder access the database.
     /// </param>
     private static void RemoveAspNetPrefixInIdentityTable(ModelBuilder builder)
     {
@@ -55,10 +55,10 @@ public class AppDbContext : IdentityDbContext<User, Role, long>
     }
 
     /// <summary>
-    ///     Create new case insensitive collation.
+    /// Create new case insensitive collation.
     /// </summary>
     /// <param name="builder">
-    ///     Model builder access the database.
+    /// Model builder access the database.
     /// </param>
     private static void InitCaseInsensitiveCollation(ModelBuilder builder)
     {

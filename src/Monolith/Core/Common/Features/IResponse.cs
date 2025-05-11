@@ -3,7 +3,7 @@
 namespace Common.Features;
 
 /// <summary>
-///     Marker interface to represent a response
+/// Marker interface to represent a response
 /// </summary>
 public interface IResponse
 {

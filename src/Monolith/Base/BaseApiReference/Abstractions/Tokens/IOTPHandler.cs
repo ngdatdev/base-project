@@ -6,7 +6,7 @@
 public interface IOTPHandler
 {
     /// <summary>
-    ///  Generate Otp
+    /// Generate Otp
     /// </summary>
     /// <param name="length"></param>
     /// <returns></returns>

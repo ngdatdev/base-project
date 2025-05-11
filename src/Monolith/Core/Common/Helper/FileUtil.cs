@@ -2,6 +2,9 @@
 
 namespace Common.Helper;
 
+/// <summary>
+/// File Util.
+/// </summary>
 public static class FileUtil
 {
     public static string GetFileExtension(string fileName) =>

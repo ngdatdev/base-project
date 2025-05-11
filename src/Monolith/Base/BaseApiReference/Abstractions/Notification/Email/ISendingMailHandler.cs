@@ -4,29 +4,29 @@ using System.Threading.Tasks;
 namespace BaseApiReference.Abstractions.Notification.Email;
 
 /// <summary>
-///     Represent interface of sending mail handler.
+/// Represent interface of sending mail handler.
 /// </summary>
 public interface ISendingMailHandler
 {
     /// <summary>
-    ///     Get user account confirmation mail content.
+    /// Get user account confirmation mail content.
     /// </summary>
     /// <param name="to">
-    ///     Send to whom.
+    /// Send to whom.
     /// </param>
     /// <param name="subject">
-    ///     Mail subject
+    /// Mail subject
     /// </param>
     /// <param name="mainVerifyLink">
-    ///     Main mail verification link.
+    /// Main mail verification link.
     /// </param>
     /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
-    ///     to cancel the current operation when user stop
-    ///     the request.
+    /// A token that is used for notifying system
+    /// to cancel the current operation when user stop
+    /// the request.
     /// </param>
     /// <returns>
-    ///     Model contain receiver information.
+    /// Model contain receiver information.
     /// </returns>
     Task<AppMailContent> GetUserAccountConfirmationMailContentAsync(
         string to,
@@ -36,24 +36,24 @@ public interface ISendingMailHandler
     );
 
     /// <summary>
-    ///     Get user account confirmation mail content.
+    /// Get user account confirmation mail content.
     /// </summary>
     /// <param name="to">
-    ///     Send to whom.
+    /// Send to whom.
     /// </param>
     /// <param name="subject">
-    ///     Mail subject
+    /// Mail subject
     /// </param>
     /// <param name="resetPasswordToken">
-    ///     Mail reset password token.
+    /// Mail reset password token.
     /// </param>
     /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
-    ///     to cancel the current operation when user stop
-    ///     the request.
+    /// A token that is used for notifying system
+    /// to cancel the current operation when user stop
+    /// the request.
     /// </param>
     /// <returns>
-    ///     Model contain receiver information.
+    /// Model contain receiver information.
     /// </returns>
     Task<AppMailContent> GetUserResetPasswordMailContentAsync(
         string to,
@@ -63,18 +63,18 @@ public interface ISendingMailHandler
     );
 
     /// <summary>
-    ///     Sending an email to the specified user.
+    /// Sending an email to the specified user.
     /// </summary>
     /// <param name="mailContent">
-    ///     A model contains all receiver information.
+    /// A model contains all receiver information.
     /// </param>
     /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
-    ///     to cancel the current operation when user stop
-    ///     the request.
+    /// A token that is used for notifying system
+    /// to cancel the current operation when user stop
+    /// the request.
     /// </param>
     /// <returns>
-    ///     Task containing boolean result.
+    /// Task containing boolean result.
     /// </returns>
     Task<bool> SendAsync(AppMailContent mailContent, CancellationToken cancellationToken);
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Common.Helper;
 
 /// <summary>
-///     String Util.
+/// String Util.
 /// </summary>
 public static class StringUtil
 {

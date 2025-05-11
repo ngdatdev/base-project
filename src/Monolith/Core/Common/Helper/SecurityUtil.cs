@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Common.Helper;
 
+/// <summary>
+/// Security Util.
+/// </summary>
 public static class SecurityUtil
 {
     public static string Sha256(string input)
