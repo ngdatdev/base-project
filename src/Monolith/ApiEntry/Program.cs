@@ -1,4 +1,5 @@
 using System.Text;
+using Common.Middleware;
 using Common.RegisterServices;
 using Infrastructure.ServiceRegister;
 
@@ -16,7 +17,8 @@ services.RegisterInfrastructure(configuration);
 
 var app = builder.Build();
 
-//app.UseMiddleware<GlobalExceptionHandler>();
+// Custom middleware
+app.UseMiddleware<GlobalExceptionHandler>();
 
 // Enable Swagger
 if (app.Environment.IsDevelopment())

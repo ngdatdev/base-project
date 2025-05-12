@@ -8,7 +8,6 @@
     <Folder Include="Applications\SQLs\" />
     <Folder Include="Applications\Repositories\" />
     <Folder Include="Applications\Pagination\" />
-    <Folder Include="Middleware\" />
   </ItemGroup>
 
   <ItemGroup>

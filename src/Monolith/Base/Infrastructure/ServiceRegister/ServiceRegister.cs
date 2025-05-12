@@ -24,5 +24,6 @@ public static class ServiceRegister
         services.AddIdGenerator();
         services.AddCaching(configuration);
         services.AddDatabaseContextPool(configuration);
+        services.AddAspNetCoreIdentity(configuration);
     }
 }

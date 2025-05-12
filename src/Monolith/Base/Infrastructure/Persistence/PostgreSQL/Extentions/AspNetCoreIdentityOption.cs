@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infrastructure.Identity;
+﻿namespace Infrastructure.Persistence.PostgreSQL.Extentions;
 
 /// summary
-///     The AspNetCoreIdentityOption class is used to hold various database configuration settings.
+/// The AspNetCoreIdentityOption class is used to hold various database configuration settings.
 /// summary
 public sealed class AspNetCoreIdentityOption
 {

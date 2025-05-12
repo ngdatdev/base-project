@@ -19,7 +19,6 @@
     <Folder Include="Abstractions\Csv\" />
     <Folder Include="Abstractions\Excel\" />
     <Folder Include="Abstractions\HealthChecks\" />
-    <Folder Include="Abstractions\Identity\" />
     <Folder Include="Abstractions\Interceptors\" />
     <Folder Include="Abstractions\Logging\" />
     <Folder Include="Abstractions\MessageBrokers\" />

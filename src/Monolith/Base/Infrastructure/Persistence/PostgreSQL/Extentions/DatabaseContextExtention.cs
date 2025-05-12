@@ -63,5 +63,37 @@ public static class DatabaseContextExtention
                     );
             }
         );
+        services.AddDbContextFactory<AppDbContext>(
+            optionsAction: (provider, config) =>
+            {
+                var option = configuration
+                    .GetRequiredSection(key: "Database")
+                    .GetRequiredSection(key: "SecurityModule")
+                    .Get<DatabaseOption>();
+
+                config
+                    .UseNpgsql(
+                        connectionString: option?.ConnectionString,
+                        npgsqlOptionsAction: databaseOptionsAction =>
+                        {
+                            databaseOptionsAction
+                                .CommandTimeout(commandTimeout: option?.CommandTimeOut)
+                                .EnableRetryOnFailure(maxRetryCount: option.EnableRetryOnFailure)
+                                .MigrationsAssembly(
+                                    assemblyName: Assembly.GetExecutingAssembly().GetName().Name
+                                );
+                        }
+                    )
+                    .EnableSensitiveDataLogging(
+                        sensitiveDataLoggingEnabled: option.EnableSensitiveDataLogging
+                    )
+                    .EnableDetailedErrors(detailedErrorsEnabled: option.EnableDetailedErrors)
+                    .EnableThreadSafetyChecks(enableChecks: option.EnableThreadSafetyChecks)
+                    .EnableServiceProviderCaching(
+                        cacheServiceProvider: option.EnableServiceProviderCaching
+                    );
+            },
+            ServiceLifetime.Scoped
+        );
     }
 }
