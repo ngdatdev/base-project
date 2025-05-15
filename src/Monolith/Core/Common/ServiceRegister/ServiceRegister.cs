@@ -6,7 +6,9 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
 using Common.Features;
+using Common.Filters;
 using Common.ServiceRegister;
+using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +27,7 @@ public static class ServiceRegister
         // Register common services
         AddDispatcherService(services);
         AddHandlerService(services);
+        AddValidation(services, configuration);
 
         // Register custom api services
         services.AddBaseController();
@@ -35,7 +38,7 @@ public static class ServiceRegister
         services.AddRateLimiter(configuration);
         services.AddResponseCachings();
         services.AddSwagger(configuration);
-
+        services.AddConfigFilter(configuration);
         return services;
     }
 
@@ -103,6 +106,31 @@ public static class ServiceRegister
                     services.AddTransient(handlerInterface, handlerType);
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Add validation.
+    /// </summary>
+    /// <param name="services"></param>
+    public static void AddValidation(
+        this IServiceCollection services,
+        IConfigurationManager configuration
+    )
+    {
+        var assemblies = AppDomain
+            .CurrentDomain.GetAssemblies()
+            .Where(a =>
+                a.GetName()
+                    .Name.StartsWith(
+                        configuration.GetSection("RuleName").GetSection("PrefixFeature").Value
+                    )
+            )
+            .ToList();
+
+        foreach (var assembly in assemblies.Distinct())
+        {
+            services.AddValidatorsFromAssembly(assembly);
         }
     }
 }

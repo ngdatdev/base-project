@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using BaseApiReference.Abstractions.Caching;
 using BaseApiReference.Abstractions.IdGenerator;
+using BaseApiReference.Enum;
 using Common.Features;
 using F001.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -29,6 +30,8 @@ public class F001Handler : IHandler<F001Request, F001Response>
         CancellationToken cancellationToken
     )
     {
+        var accountStatus = AccountStatus.GetAll();
+
         var helloWorld = request.Name;
         var generatorId = _generatorIdHandler.NextId();
 

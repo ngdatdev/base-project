@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Common.Features;
+using Common.Filters;
 using Common.HttpResponseMapper;
 using F001.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ public class F001Endpoint : ControllerBase
     }
 
     [HttpGet]
+    [ServiceFilter(typeof(ValidationRequestFilter<F001Request>))]
     public async Task<IActionResult> GetHelloWorld(
         F001Request request,
         CancellationToken cancellationToken

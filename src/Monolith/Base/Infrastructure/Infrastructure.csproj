@@ -18,6 +18,7 @@
     <Folder Include="Notification\SMS\" />
     <Folder Include="Pdf\" />
     <Folder Include="BackgroundJob\" />
+    <Folder Include="Persistence\PostgreSQL\Data\" />
     <Folder Include="Persistence\Typesense\" />
     <Folder Include="Persistence\PostgreSQL\Localization\" />
     <Folder Include="Persistence\PostgreSQL\Interceptors\" />
