@@ -5,6 +5,7 @@ using Infrastructure.ServiceRegister;
 
 // Default setting.
 Console.OutputEncoding = Encoding.UTF8;
+var entryAssembly = typeof(Program).Assembly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 // Register services to the container.
-services.RegisterCore(configuration);
+services.RegisterCore(configuration, entryAssembly);
 services.RegisterInfrastructure(configuration);
 
 var app = builder.Build();

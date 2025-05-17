@@ -3,7 +3,7 @@
 /// <summary>
 /// Constants for application response messages.
 /// </summary>
-internal static class AppCodes
+public static class AppCodes
 {
     // ✅ General success and error messages
     public const string SUCCESS = "The operation was completed successfully.";

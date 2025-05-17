@@ -21,12 +21,13 @@ public static class ServiceRegister
 {
     public static IServiceCollection RegisterCore(
         this IServiceCollection services,
-        IConfigurationManager configuration
+        IConfigurationManager configuration,
+        Assembly assembly
     )
     {
         // Register common services
         AddDispatcherService(services);
-        AddHandlerService(services);
+        AddHandlerService(services, configuration);
         AddValidation(services, configuration);
 
         // Register custom api services
@@ -37,7 +38,7 @@ public static class ServiceRegister
         services.AddLoggings();
         services.AddRateLimiter(configuration);
         services.AddResponseCachings();
-        services.AddSwagger(configuration);
+        services.AddSwagger(configuration, assembly);
         services.AddConfigFilter(configuration);
         return services;
     }
@@ -55,12 +56,17 @@ public static class ServiceRegister
     /// Add handler service for all handlers.
     /// </summary>
     /// <param name="services"></param>
-    public static void AddHandlerService(IServiceCollection services)
+    public static void AddHandlerService(
+        IServiceCollection services,
+        IConfigurationManager configuration
+    )
     {
         string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
         // Regex pattern: "F" + 3 number + ".dll"
-        Regex regex = new Regex(@"F\d{3}\.dll$", RegexOptions.IgnoreCase);
+        var pattern = configuration.GetSection("RuleName").GetSection("PrefixFeature").Value;
+
+        Regex regex = new Regex($@"{pattern}\.dll$", RegexOptions.IgnoreCase);
 
         var dllFiles = Directory
             .GetFiles(basePath, "*.dll")
@@ -118,15 +124,14 @@ public static class ServiceRegister
         IConfigurationManager configuration
     )
     {
+        var pattern = configuration.GetSection("RuleName").GetSection("PrefixFeature").Value;
+
         var assemblies = AppDomain
             .CurrentDomain.GetAssemblies()
-            .Where(a =>
-                a.GetName()
-                    .Name.StartsWith(
-                        configuration.GetSection("RuleName").GetSection("PrefixFeature").Value
-                    )
-            )
+            .Where(a => Regex.IsMatch(a.GetName().Name, pattern))
             .ToList();
+
+        services.AddValidatorsFromAssembly(typeof(ServiceRegister).Assembly);
 
         foreach (var assembly in assemblies.Distinct())
         {

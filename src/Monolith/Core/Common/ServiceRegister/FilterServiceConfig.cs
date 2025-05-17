@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common.Filters;
 using FluentValidation;
@@ -28,14 +29,11 @@ internal static class FilterServiceConfig
         IConfigurationManager configuration
     )
     {
+        var pattern = configuration.GetSection("RuleName").GetSection("PrefixFeature").Value;
+
         var assemblies = AppDomain
             .CurrentDomain.GetAssemblies()
-            .Where(a =>
-                a.GetName()
-                    .Name.StartsWith(
-                        configuration.GetSection("RuleName").GetSection("PrefixFeature").Value
-                    )
-            )
+            .Where(a => Regex.IsMatch(a.GetName().Name, pattern))
             .ToList();
 
         foreach (var assembly in assemblies.Distinct())

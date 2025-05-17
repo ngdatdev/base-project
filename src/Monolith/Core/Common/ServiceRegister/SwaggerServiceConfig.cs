@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Common.Filters;
 using Common.Options;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +28,8 @@ internal static class SwaggerServiceConfig
     /// </param>
     internal static void AddSwagger(
         this IServiceCollection services,
-        IConfigurationManager configuration
+        IConfigurationManager configuration,
+        Assembly entryAssembly
     )
     {
         services.AddSwaggerGen(setupAction: config =>
@@ -110,12 +113,20 @@ internal static class SwaggerServiceConfig
                     }
                 }
             );
+            var pattern = configuration.GetSection("RuleName").GetSection("PrefixFeature").Value;
 
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var assemblies = AppDomain
+                .CurrentDomain.GetAssemblies()
+                .Where(a => Regex.IsMatch(a.GetName().Name, pattern))
+                .ToList();
 
-            var xmlFilePath = Path.Combine(path1: AppContext.BaseDirectory, path2: xmlFilename);
+            foreach (var assembly in assemblies.Distinct())
+            {
+                var xmlFilename = $"{assembly.GetName().Name}.xml";
 
-            config.IncludeXmlComments(filePath: xmlFilePath);
+                var xmlFilePath = Path.Combine(path1: AppContext.BaseDirectory, path2: xmlFilename);
+                config.IncludeXmlComments(filePath: xmlFilePath);
+            }
         });
     }
 }

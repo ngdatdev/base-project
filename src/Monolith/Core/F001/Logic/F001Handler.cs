@@ -7,8 +7,6 @@ using BaseApiReference.Abstractions.IdGenerator;
 using BaseApiReference.Enum;
 using Common.Features;
 using F001.Data;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using PenomyAPI.App.Common.Caching;
 
