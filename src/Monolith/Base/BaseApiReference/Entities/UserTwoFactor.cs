@@ -10,7 +10,7 @@ public class UserTwoFactor : BaseEntity<long>
 {
     public string SecretKey { get; set; }
 
-    public TwoFAMethod TwoFAMethod { get; set; }
+    public string TwoFAMethod { get; set; }
 
     public bool IsEnabled { get; set; }
 

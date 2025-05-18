@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,8 +9,6 @@ namespace BaseApiReference.Extentions;
 /// </summary>
 public static class ServiceCollectionExtension
 {
-    private static readonly Type AsyncActionFilterType = typeof(IAsyncActionFilter);
-
     public static IServiceCollection MakeSingletonLazy<T>(this IServiceCollection services)
         where T : class
     {
@@ -25,31 +21,9 @@ public static class ServiceCollectionExtension
         return services.AddScoped<Lazy<T>>(provider => new(provider.GetRequiredService<T>()));
     }
 
-    public static IServiceCollection RegisterFiltersFromAssembly(
-        this IServiceCollection services,
-        Assembly assembly
-    )
+    public static IServiceCollection MakeTransientLazy<T>(this IServiceCollection services)
+        where T : class
     {
-        var allTypes = assembly.GetTypes();
-
-        var isFilterFound = allTypes.Any(type =>
-            AsyncActionFilterType.IsAssignableFrom(type) && !type.IsInterface
-        );
-        if (!isFilterFound)
-        {
-            throw new ApplicationException(
-                $"No filters are found in this assembly {assembly.GetName()}, please omit this function !!"
-            );
-        }
-
-        foreach (var type in allTypes)
-        {
-            if (AsyncActionFilterType.IsAssignableFrom(type) && !type.IsInterface)
-            {
-                services.AddSingleton(type);
-            }
-        }
-
-        return services;
+        return services.AddTransient<Lazy<T>>(provider => new(provider.GetRequiredService<T>()));
     }
 }

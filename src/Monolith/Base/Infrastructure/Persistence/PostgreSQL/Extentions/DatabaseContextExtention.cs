@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Infrastructure.Persistence.PostgreSQL.Data;
 using Infrastructure.Persistence.PostgreSQL.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -95,5 +96,6 @@ public static class DatabaseContextExtention
             },
             ServiceLifetime.Scoped
         );
+        services.AddSingleton<DataSeeding>();
     }
 }

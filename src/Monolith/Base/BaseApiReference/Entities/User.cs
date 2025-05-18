@@ -15,11 +15,11 @@ public class User : IdentityUser<long>, ICreatedEntity, ITemporarilyRemovedEntit
 
     public string Avatar { get; set; }
 
-    public AccountStatus Status { get; set; }
+    public string Status { get; set; }
 
     public DateTime LastLogin { get; set; }
 
-    public TwoFAMethod PreferedTwoFAMethod { get; set; }
+    public string PreferedTwoFAMethod { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

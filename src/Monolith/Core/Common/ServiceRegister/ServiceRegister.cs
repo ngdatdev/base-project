@@ -5,12 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
+using BaseApiReference.Abstractions.Tokens;
+using Common.Applications.Tokens;
 using Common.Features;
-using Common.Filters;
 using Common.ServiceRegister;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Common.RegisterServices;
 
@@ -29,6 +31,8 @@ public static class ServiceRegister
         AddDispatcherService(services);
         AddHandlerService(services, configuration);
         AddValidation(services, configuration);
+        AddTokenHandlers(services);
+        AddRepositories(services, configuration);
 
         // Register custom api services
         services.AddBaseController();
@@ -136,6 +140,63 @@ public static class ServiceRegister
         foreach (var assembly in assemblies.Distinct())
         {
             services.AddValidatorsFromAssembly(assembly);
+        }
+    }
+
+    /// <summary>
+    /// Add token handlers.
+    /// </summary>
+    /// <param name="services"></param>
+    public static void AddTokenHandlers(this IServiceCollection services)
+    {
+        services.AddSingleton<JsonWebTokenHandler>();
+        services.AddSingleton<IAccessTokenHandler, AccessTokenHandler>();
+        services.AddSingleton<IRefreshTokenHandler, RefreshTokenHandler>();
+        services.AddSingleton<IOTPHandler, OTPHandler>();
+    }
+
+    public static void AddRepositories(
+        this IServiceCollection services,
+        IConfigurationManager configuration
+    )
+    {
+        var pattern = configuration.GetSection("RuleName")["PrefixFeature"];
+        if (string.IsNullOrWhiteSpace(pattern))
+            throw new ArgumentException("Missing PrefixFeature regex pattern in configuration.");
+
+        var interfaceRegex = new Regex(@$"^I({pattern})Repository$");
+
+        var assemblies = AppDomain
+            .CurrentDomain.GetAssemblies()
+            .Where(a => Regex.IsMatch(a.GetName().Name, pattern))
+            .ToList();
+
+        foreach (var assembly in assemblies)
+        {
+            Type[] types = assembly.GetTypes();
+
+            var interfaces = types.Where(t => t.IsInterface && Regex.IsMatch(t.Name, pattern));
+            foreach (var @interface in interfaces)
+            {
+                var match = interfaceRegex.Match(@interface.Name);
+                if (!match.Success)
+                    continue;
+
+                var key = match.Groups[1].Value;
+                var implName = key + "Repository";
+
+                var implementation = types.FirstOrDefault(t =>
+                    t.IsClass
+                    && !t.IsAbstract
+                    && t.Name == implName
+                    && @interface.IsAssignableFrom(t)
+                );
+
+                if (implementation != null)
+                {
+                    services.AddScoped(@interface, implementation);
+                }
+            }
         }
     }
 }

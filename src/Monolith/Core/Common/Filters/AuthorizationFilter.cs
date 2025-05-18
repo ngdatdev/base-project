@@ -16,6 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Filters;
 
+/// <summary>
+/// Authorization Filter.
+/// </summary>
 public class AuthorizationFilter : IAsyncAuthorizationFilter
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
