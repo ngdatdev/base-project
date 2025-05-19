@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BaseApiReference.Abstractions.IdGenerator;
 using BaseApiReference.Abstractions.Tokens;
 using BaseApiReference.Entities;
+using Common.Applications.Repositories;
 using Common.Constants;
 using Common.Features;
 using Feature000.Data;
@@ -27,6 +28,7 @@ public sealed class F000Handler : IHandler<F000Request, F000Response>
     private readonly IRefreshTokenHandler _refreshTokenHandler;
     private readonly IAccessTokenHandler _accessTokenHandler;
     private readonly IF000Repository _f002Repository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public F000Handler(
         IGeneratorIdHandler generatorIdHandler,
@@ -35,7 +37,8 @@ public sealed class F000Handler : IHandler<F000Request, F000Response>
         SignInManager<User> signInManager,
         IRefreshTokenHandler refreshTokenHandler,
         IAccessTokenHandler accessTokenHandler,
-        IF000Repository f002Repository
+        IF000Repository f002Repository,
+        IUnitOfWork unitOfWork
     )
     {
         _generatorIdHandler = generatorIdHandler;
@@ -45,6 +48,7 @@ public sealed class F000Handler : IHandler<F000Request, F000Response>
         _refreshTokenHandler = refreshTokenHandler;
         _accessTokenHandler = accessTokenHandler;
         _f002Repository = f002Repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<F000Response> HandlerAsync(
@@ -52,6 +56,8 @@ public sealed class F000Handler : IHandler<F000Request, F000Response>
         CancellationToken cancellationToken
     )
     {
+        _unitOfWork.Repository<User>().Count();
+
         // Find user by username.
         var foundUser = await _userManager.FindByNameAsync(request.Username);
 

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
 using BaseApiReference.Abstractions.Tokens;
+using Common.Applications.Repositories;
 using Common.Applications.Tokens;
 using Common.Features;
 using Common.ServiceRegister;
@@ -33,6 +34,7 @@ public static class ServiceRegister
         AddValidation(services, configuration);
         AddTokenHandlers(services);
         AddRepositories(services, configuration);
+        AddApplications(services);
 
         // Register custom api services
         services.AddBaseController();
@@ -153,6 +155,16 @@ public static class ServiceRegister
         services.AddSingleton<IAccessTokenHandler, AccessTokenHandler>();
         services.AddSingleton<IRefreshTokenHandler, RefreshTokenHandler>();
         services.AddSingleton<IOTPHandler, OTPHandler>();
+    }
+
+    /// <summary>
+    /// Add applications.
+    /// </summary>
+    /// <param name="services"></param>
+    public static void AddApplications(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
     public static void AddRepositories(
