@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\BackgroundJob\" />
-    <Folder Include="Abstractions\Csv\" />
-    <Folder Include="Abstractions\Excel\" />
     <Folder Include="Abstractions\HealthChecks\" />
     <Folder Include="Abstractions\Interceptors\" />
     <Folder Include="Abstractions\Logging\" />

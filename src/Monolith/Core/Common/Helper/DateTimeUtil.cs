@@ -7,6 +7,14 @@ namespace Common.Helper;
 /// </summary>
 public static class DateTimeUtil
 {
+    public static DateTime Now => DateTime.Now;
+
+    public static DateTime UtcNow => DateTime.UtcNow;
+
+    public static DateTimeOffset OffsetNow => DateTimeOffset.Now;
+
+    public static DateTimeOffset OffsetUtcNow => DateTimeOffset.UtcNow;
+
     public static string ToReadableFormat(DateTime date) => date.ToString("dd/MM/yyyy HH:mm");
 
     public static DateTime StartOfWeek(DateTime dt) => dt.AddDays(-(int)dt.DayOfWeek);

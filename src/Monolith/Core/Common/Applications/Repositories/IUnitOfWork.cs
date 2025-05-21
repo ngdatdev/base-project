@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Common.Applications.Repositories;
@@ -30,16 +27,21 @@ public interface IUnitOfWork : IDisposable
     /// </summary>
     /// <returns></returns>
     int SaveChanges();
+
+    /// <summary>
+    /// This method is used to begin a transaction
+    /// </summary>
+    /// <returns></returns>
     Task BeginTransactionAsync();
 
     /// <summary>
-    /// This method is used to save changes
+    /// This method is used to commit a transaction
     /// </summary>
     /// <returns></returns>
     Task CommitTransactionAsync();
 
     /// <summary>
-    /// This method is used to save changes
+    /// This method is used to rollback a transaction
     /// </summary>
     /// <returns></returns>
     Task RollbackTransactionAsync();
