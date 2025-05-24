@@ -8,7 +8,7 @@ namespace Infrastructure.CSV;
 /// </summary>
 internal static class CsvServicesExtention
 {
-    public static void AddCSV(this IServiceCollection services)
+    public static void AddCSVServices(this IServiceCollection services)
     {
         services.AddSingleton<ICsvHandler, CsvHandler>();
     }

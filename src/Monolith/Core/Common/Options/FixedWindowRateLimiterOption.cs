@@ -1,7 +1,7 @@
 ﻿namespace Common.Options;
 
 /// <summary>
-///     FixedWindowRateLimiterOption class is used to hold various swagger configuration settings
+/// FixedWindowRateLimiterOption class is used to hold various swagger configuration settings
 /// </summary>
 public sealed class FixedWindowRateLimiterOption
 {

@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Abstractions\Pdf\**" />
+    <Content Remove="Abstractions\Pdf\**" />
+    <EmbeddedResource Remove="Abstractions\Pdf\**" />
+    <None Remove="Abstractions\Pdf\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" />
@@ -24,7 +31,6 @@
     <Folder Include="Abstractions\Logging\" />
     <Folder Include="Abstractions\MessageBrokers\" />
     <Folder Include="Abstractions\Monitoring\" />
-    <Folder Include="Abstractions\Pdf\" />
     <Folder Include="Metadata\" />
   </ItemGroup>
 

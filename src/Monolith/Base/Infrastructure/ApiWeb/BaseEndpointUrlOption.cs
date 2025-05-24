@@ -1,7 +1,7 @@
-﻿namespace Common.Options;
+﻿namespace Infrastructure.ApiWeb;
 
 /// summary
-/// The BaseEndpointUrl class is used to hold various api configuration settings
+/// BaseEndpointUrlOption
 /// summary
 public class BaseEndpointUrlOption
 {

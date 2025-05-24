@@ -37,6 +37,7 @@ public static class ServiceRegister
         AddApplications(services);
 
         // Register custom api services
+        services.AddHttpClient();
         services.AddBaseController();
         services.AddAuthentication(configuration);
         services.AddAuthorizations();

@@ -1,5 +1,13 @@
-﻿using Infrastructure.Caching;
+﻿using Infrastructure.ApiWeb;
+using Infrastructure.Caching;
+using Infrastructure.CSV;
+using Infrastructure.Excel;
 using Infrastructure.IdGenerator;
+using Infrastructure.Notification.Email;
+using Infrastructure.Notification.TwilioSMS;
+using Infrastructure.Payment.PayOs;
+using Infrastructure.Payment.VietQr;
+using Infrastructure.Payment.VNPay;
 using Infrastructure.Persistence.PostgreSQL.Extentions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,9 +29,17 @@ public static class ServiceRegister
         IConfigurationManager configuration
     )
     {
+        services.AddApiWebConfig(configuration);
         services.AddIdGenerator();
-        services.AddCaching(configuration);
+        services.AddCaching(configuration, CacheType.Hybrid);
         services.AddDatabaseContextPool(configuration);
         services.AddAspNetCoreIdentity(configuration);
+        services.AddCSVServices();
+        services.AddExcelServices();
+        services.AddMailKitServices(configuration);
+        services.AddSMSServices(configuration);
+        services.AddVietQRCodeService();
+        // services.ConfigPayOSService(configuration);
+        // services.AddVNPayService(configuration);
     }
 }

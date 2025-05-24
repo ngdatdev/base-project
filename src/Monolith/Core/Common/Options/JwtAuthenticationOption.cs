@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Common.Options;
 
 /// summary
-///     The JwtAuthenticationOption class is used to hold various jwt authentication configuration settings.
+/// The JwtAuthenticationOption class is used to hold various jwt authentication configuration settings.
 /// summary
 public class JwtAuthenticationOption
 {

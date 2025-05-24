@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using BaseApiReference.Abstractions.Caching;
 using BaseApiReference.Abstractions.IdGenerator;
 using BaseApiReference.Abstractions.Tokens;
 using BaseApiReference.Entities;
@@ -12,7 +13,6 @@ using Common.Constants;
 using Common.Features;
 using Feature000.Data;
 using Microsoft.AspNetCore.Identity;
-using PenomyAPI.App.Common.Caching;
 
 namespace Feature000.Logic;
 
