@@ -25,12 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\BackgroundJob\" />
+    <Folder Include="Abstractions\Background\" />
     <Folder Include="Abstractions\HealthChecks\" />
     <Folder Include="Abstractions\Interceptors\" />
-    <Folder Include="Abstractions\Logging\" />
+    <Folder Include="Abstractions\Observability\Logging\" />
     <Folder Include="Abstractions\MessageBrokers\" />
-    <Folder Include="Abstractions\Monitoring\" />
+    <Folder Include="Abstractions\Observability\Monitoring\" />
+    <Folder Include="Abstractions\Observability\Metric\" />
+    <Folder Include="Abstractions\Observability\Tracing\" />
     <Folder Include="Metadata\" />
   </ItemGroup>
 

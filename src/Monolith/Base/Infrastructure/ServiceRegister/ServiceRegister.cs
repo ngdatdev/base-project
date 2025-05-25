@@ -5,6 +5,7 @@ using Infrastructure.Excel;
 using Infrastructure.IdGenerator;
 using Infrastructure.Notification.Email;
 using Infrastructure.Notification.TwilioSMS;
+using Infrastructure.ObjectStorage;
 using Infrastructure.Payment.PayOs;
 using Infrastructure.Payment.VietQr;
 using Infrastructure.Payment.VNPay;
@@ -39,7 +40,8 @@ public static class ServiceRegister
         services.AddMailKitServices(configuration);
         services.AddSMSServices(configuration);
         services.AddVietQRCodeService();
-        // services.ConfigPayOSService(configuration);
+        services.AddStorageServices(configuration);
+        // services.AddPayOSService(configuration);
         // services.AddVNPayService(configuration);
     }
 }
