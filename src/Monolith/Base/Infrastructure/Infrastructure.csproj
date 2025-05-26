@@ -13,7 +13,6 @@
     <Folder Include="MessageBrokers\Kafka\" />
     <Folder Include="MessageBrokers\RabbitMQ\" />
     <Folder Include="Monitoring\" />
-    <Folder Include="Background\" />
     <Folder Include="Persistence\Typesense\" />
     <Folder Include="Persistence\PostgreSQL\Localization\" />
     <Folder Include="Persistence\PostgreSQL\Interceptors\" />
@@ -32,6 +31,9 @@
     <PackageReference Include="payOS" Version="1.0.6" />
     <PackageReference Include="SnowflakeGenerator" Version="2.0.0" />
     <PackageReference Include="Twilio" Version="7.11.1" />
+    <PackageReference Include="Quartz" Version="3.14.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.14.0" />
+    <PackageReference Include="Quartz.Serialization.Json" Version="3.14.0" />
   </ItemGroup>
 
   <ItemGroup>

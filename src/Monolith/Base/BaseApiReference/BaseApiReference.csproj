@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\Background\" />
     <Folder Include="Abstractions\HealthChecks\" />
     <Folder Include="Abstractions\Interceptors\" />
     <Folder Include="Abstractions\Observability\Logging\" />

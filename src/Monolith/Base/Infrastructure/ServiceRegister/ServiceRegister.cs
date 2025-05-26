@@ -1,4 +1,5 @@
 ﻿using Infrastructure.ApiWeb;
+using Infrastructure.Background;
 using Infrastructure.Caching;
 using Infrastructure.CSV;
 using Infrastructure.Excel;
@@ -41,6 +42,7 @@ public static class ServiceRegister
         services.AddSMSServices(configuration);
         services.AddVietQRCodeService();
         services.AddStorageServices(configuration);
+        services.AddBackgroundServices(configuration);
         // services.AddPayOSService(configuration);
         // services.AddVNPayService(configuration);
     }
