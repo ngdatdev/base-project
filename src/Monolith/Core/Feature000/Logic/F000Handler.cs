@@ -56,37 +56,32 @@ public sealed class F000Handler : IHandler<F000Request, F000Response>
         CancellationToken cancellationToken
     )
     {
+        await _cacheHandler.GetAsync<string>(key: "test");
+
         _unitOfWork.Repository<User>().Count();
 
-        // Find user by username.
         var foundUser = await _userManager.FindByNameAsync(request.Username);
 
-        // Responds if user does not exist.
         if (Equals(objA: foundUser, objB: default))
         {
             return new() { StatusCode = AppCodes.USER_NOT_FOUND_CODE };
         }
 
-        // Check email confirmation.
         var isEmailConfirmed = await _userManager.IsEmailConfirmedAsync(foundUser);
 
-        // Responds if email is not confirmed.
         if (!isEmailConfirmed)
         {
             return new() { StatusCode = 411 };
         }
 
-        // Check password and handle lockout on failure.
         var signInResult = await _signInManager.CheckPasswordSignInAsync(
             user: foundUser,
             password: request.Password,
             lockoutOnFailure: true
         );
 
-        // Get user roles.
         var foundUserRoles = await _userManager.GetRolesAsync(user: foundUser);
 
-        // Init list of user claims.
         List<Claim> userClaims =
         [
             new(type: JwtRegisteredClaimNames.Jti, value: Guid.NewGuid().ToString()),
@@ -94,7 +89,6 @@ public sealed class F000Handler : IHandler<F000Request, F000Response>
             new(type: "role", value: foundUserRoles[default])
         ];
 
-        // Generate new access token.
         var newAccessToken = _accessTokenHandler.GenerateSigningToken(claims: userClaims);
 
         return await Task.FromResult(

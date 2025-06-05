@@ -1,4 +1,5 @@
-﻿using ConfigTool.MetadataTool;
+﻿using ConfigTool.EntityGenerator;
+using ConfigTool.MetadataTool;
 
 /// <summary>
 ///     Run Config Tool.
@@ -7,6 +8,7 @@ public class Program
 {
     public static void Main()
     {
-        MetadataToolMain.Run();
+        //MetadataToolMain.Run();
+        new EntityGeneratorMain().Run();
     }
 }

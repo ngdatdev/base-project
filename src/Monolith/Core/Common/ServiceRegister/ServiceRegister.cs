@@ -29,12 +29,13 @@ public static class ServiceRegister
     )
     {
         // Register common services
+        LoadAssemblies(configuration);
         AddDispatcherService(services);
-        AddHandlerService(services, configuration);
         AddValidation(services, configuration);
         AddTokenHandlers(services);
         AddRepositories(services, configuration);
         AddApplications(services);
+        AddHandlerService(services, configuration);
 
         // Register custom api services
         services.AddHttpClient();
@@ -48,6 +49,34 @@ public static class ServiceRegister
         services.AddSwagger(configuration, assembly);
         services.AddConfigFilter(configuration);
         return services;
+    }
+
+    private static void LoadAssemblies(IConfigurationManager configuration)
+    {
+        string basePath = AppDomain.CurrentDomain.BaseDirectory;
+        var pattern = configuration.GetSection("RuleName").GetSection("PrefixFeature").Value;
+        foreach (string dll in Directory.GetFiles(basePath, "*.dll"))
+        {
+            try
+            {
+                var assemblyName = AssemblyName.GetAssemblyName(dll);
+                if (!Regex.IsMatch(assemblyName.Name, pattern))
+                    continue;
+
+                if (
+                    !AppDomain
+                        .CurrentDomain.GetAssemblies()
+                        .Any(a => a.FullName == assemblyName.FullName)
+                )
+                {
+                    Assembly.Load(assemblyName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Can't load {dll}: {ex.Message}");
+            }
+        }
     }
 
     /// <summary>
@@ -73,26 +102,10 @@ public static class ServiceRegister
         // Regex pattern: "F" + 3 number + ".dll"
         var pattern = configuration.GetSection("RuleName").GetSection("PrefixFeature").Value;
 
-        Regex regex = new Regex($@"{pattern}\.dll$", RegexOptions.IgnoreCase);
-
-        var dllFiles = Directory
-            .GetFiles(basePath, "*.dll")
-            .Where(file => regex.IsMatch(Path.GetFileName(file)))
+        var assemblies = AppDomain
+            .CurrentDomain.GetAssemblies()
+            .Where(a => Regex.IsMatch(a.GetName().Name, pattern))
             .ToList();
-
-        List<Assembly> assemblies = new();
-        foreach (var dll in dllFiles)
-        {
-            try
-            {
-                Assembly assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(dll);
-                assemblies.Add(assembly);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to load assembly: {dll}", ex);
-            }
-        }
 
         foreach (var assembly in assemblies)
         {
@@ -177,7 +190,8 @@ public static class ServiceRegister
         if (string.IsNullOrWhiteSpace(pattern))
             throw new ArgumentException("Missing PrefixFeature regex pattern in configuration.");
 
-        var interfaceRegex = new Regex(@$"^I({pattern})Repository$");
+        var interfaceRegex = new Regex(@"^I\w+Repository$");
+        var implRegex = new Regex(@"^(\w+)Repository$");
 
         var assemblies = AppDomain
             .CurrentDomain.GetAssemblies()
@@ -188,7 +202,7 @@ public static class ServiceRegister
         {
             Type[] types = assembly.GetTypes();
 
-            var interfaces = types.Where(t => t.IsInterface && Regex.IsMatch(t.Name, pattern));
+            var interfaces = types.Where(t => t.IsInterface && interfaceRegex.IsMatch(t.Name));
             foreach (var @interface in interfaces)
             {
                 var match = interfaceRegex.Match(@interface.Name);
@@ -201,7 +215,7 @@ public static class ServiceRegister
                 var implementation = types.FirstOrDefault(t =>
                     t.IsClass
                     && !t.IsAbstract
-                    && t.Name == implName
+                    && implRegex.IsMatch(t.Name)
                     && @interface.IsAssignableFrom(t)
                 );
 

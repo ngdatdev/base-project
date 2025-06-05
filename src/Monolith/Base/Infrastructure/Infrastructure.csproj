@@ -10,8 +10,6 @@
     <Folder Include="HealthChecks\" />
     <Folder Include="Interceptors\" />
     <Folder Include="Logging\" />
-    <Folder Include="MessageBrokers\Kafka\" />
-    <Folder Include="MessageBrokers\RabbitMQ\" />
     <Folder Include="Monitoring\" />
     <Folder Include="Persistence\Typesense\" />
     <Folder Include="Persistence\PostgreSQL\Localization\" />
@@ -29,6 +27,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="payOS" Version="1.0.6" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageReference Include="SnowflakeGenerator" Version="2.0.0" />
     <PackageReference Include="Twilio" Version="7.11.1" />
     <PackageReference Include="Quartz" Version="3.14.0" />

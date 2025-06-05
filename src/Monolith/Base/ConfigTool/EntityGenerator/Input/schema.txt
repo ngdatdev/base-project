@@ -1,0 +1,320 @@
+﻿Table "users" {
+  "id" INT [pk, increment]
+  "username" NVARCHAR(50) [unique, not null]
+  "email" NVARCHAR(100) [unique, not null]
+  "password_hash" NVARCHAR(255) [not null]
+  "first_name" NVARCHAR(50)
+  "last_name" NVARCHAR(50)
+  "date_of_birth" DATE
+  "phone" NVARCHAR(15)
+  "avatar_url" NVARCHAR(255)
+  "subscription_type" users_subscription_type_enum [default: 'free']
+  "subscription_start_date" DATE
+  "subscription_end_date" DATE
+  "is_active" BIT [default: 1]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+  "updated_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    (subscription_type, subscription_end_date) [name: "IX_users_subscription"]
+  }
+}
+
+Table "categories" {
+  "id" INT [pk, increment]
+  "name" NVARCHAR(100) [not null]
+  "description" NTEXT
+  "slug" NVARCHAR(100) [unique, not null]
+}
+
+Table "countries" {
+  "id" INT [pk, increment]
+  "name" NVARCHAR(100) [not null]
+  "code" NVARCHAR(5) [unique, not null]
+}
+
+Table "directors" {
+  "id" INT [pk, increment]
+  "name" NVARCHAR(100) [not null]
+  "biography" NTEXT
+  "date_of_birth" DATE
+  "nationality" NVARCHAR(50)
+  "avatar_url" NVARCHAR(255)
+}
+
+Table "actors" {
+  "id" INT [pk, increment]
+  "name" NVARCHAR(100) [not null]
+  "biography" NTEXT
+  "date_of_birth" DATE
+  "nationality" NVARCHAR(50)
+  "avatar_url" NVARCHAR(255)
+}
+
+Table "movies" {
+  "id" INT [pk, increment]
+  "title" NVARCHAR(255) [not null]
+  "original_title" NVARCHAR(255)
+  "slug" NVARCHAR(255) [unique, not null]
+  "description" NTEXT
+  "poster_url" NVARCHAR(255)
+  "banner_url" NVARCHAR(255)
+  "trailer_url" NVARCHAR(255)
+  "duration" INT
+  "release_date" DATE
+  "imdb_rating" DECIMAL(3,1)
+  "our_rating" DECIMAL(3,1)
+  "view_count" INT [default: 0]
+  "status" movies_status_enum [default: 'now_showing']
+  "is_premium" BIT [default: 0]
+  "country_id" INT
+  "created_at" DATETIME2 [default: `GETDATE()`]
+  "updated_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    status [name: "IX_movies_status"]
+    is_premium [name: "IX_movies_is_premium"]
+    release_date [name: "IX_movies_release_date"]
+    view_count [name: "IX_movies_view_count"]
+  }
+}
+
+Table "series" {
+  "id" INT [pk, increment]
+  "title" NVARCHAR(255) [not null]
+  "original_title" NVARCHAR(255)
+  "slug" NVARCHAR(255) [unique, not null]
+  "description" NTEXT
+  "poster_url" NVARCHAR(255)
+  "banner_url" NVARCHAR(255)
+  "trailer_url" NVARCHAR(255)
+  "total_seasons" INT [default: 1]
+  "total_episodes" INT [default: 0]
+  "release_date" DATE
+  "end_date" DATE
+  "imdb_rating" DECIMAL(3,1)
+  "our_rating" DECIMAL(3,1)
+  "view_count" INT [default: 0]
+  "status" series_status_enum [default: 'ongoing']
+  "is_premium" BIT [default: 0]
+  "country_id" INT
+  "created_at" DATETIME2 [default: `GETDATE()`]
+  "updated_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    status [name: "IX_series_status"]
+    is_premium [name: "IX_series_is_premium"]
+  }
+}
+
+Table "episodes" {
+  "id" INT [pk, increment]
+  "series_id" INT [not null]
+  "season_number" INT [not null]
+  "episode_number" INT [not null]
+  "title" NVARCHAR(255)
+  "description" NTEXT
+  "duration" INT
+  "air_date" DATE
+  "view_count" INT [default: 0]
+  "is_premium" BIT [default: 0]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    (series_id, season_number, episode_number) [unique, name: "unique_episode"]
+    (series_id, season_number) [name: "IX_episodes_series_season"]
+  }
+}
+
+Table "movie_categories" {
+  "movie_id" INT
+  "category_id" INT
+
+  Indexes {
+    (movie_id, category_id) [pk]
+  }
+}
+
+Table "series_categories" {
+  "series_id" INT
+  "category_id" INT
+
+  Indexes {
+    (series_id, category_id) [pk]
+  }
+}
+
+Table "movie_directors" {
+  "movie_id" INT
+  "director_id" INT
+
+  Indexes {
+    (movie_id, director_id) [pk]
+  }
+}
+
+Table "series_directors" {
+  "series_id" INT
+  "director_id" INT
+
+  Indexes {
+    (series_id, director_id) [pk]
+  }
+}
+
+Table "movie_actors" {
+  "movie_id" INT
+  "actor_id" INT
+  "character_name" NVARCHAR(100)
+  "is_main_character" BIT [default: 0]
+
+  Indexes {
+    (movie_id, actor_id) [pk]
+  }
+}
+
+Table "series_actors" {
+  "series_id" INT
+  "actor_id" INT
+  "character_name" NVARCHAR(100)
+  "is_main_character" BIT [default: 0]
+
+  Indexes {
+    (series_id, actor_id) [pk]
+  }
+}
+
+Table "video_servers" {
+  "id" INT [pk, increment]
+  "name" NVARCHAR(50) [not null]
+  "base_url" NVARCHAR(255) [not null]
+  "is_active" BIT [default: 1]
+  "priority" INT [default: 1]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+}
+
+Table "movie_videos" {
+  "id" INT [pk, increment]
+  "movie_id" INT [not null]
+  "server_id" INT [not null]
+  "quality_id" INT [not null]
+  "video_url" NVARCHAR(500) [not null]
+  "subtitle_url" NVARCHAR(500)
+  "language" NVARCHAR(10) [default: 'vi']
+  "is_active" BIT [default: 1]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+}
+
+Table "episode_videos" {
+  "id" INT [pk, increment]
+  "episode_id" INT [not null]
+  "server_id" INT [not null]
+  "quality_id" INT [not null]
+  "video_url" NVARCHAR(500) [not null]
+  "subtitle_url" NVARCHAR(500)
+  "language" NVARCHAR(10) [default: 'vi']
+  "is_active" BIT [default: 1]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+}
+
+Table "watch_history" {
+  "id" INT [pk, increment]
+  "user_id" INT [not null]
+  "movie_id" INT
+  "episode_id" INT
+  "watch_position" INT [default: 0]
+  "watch_duration" INT [default: 0]
+  "is_completed" BIT [default: 0]
+  "last_watched_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    user_id [name: "IX_watch_history_user"]
+    last_watched_at [name: "IX_watch_history_last_watched"]
+  }
+}
+
+Table "favorites" {
+  "id" INT [pk, increment]
+  "user_id" INT [not null]
+  "movie_id" INT
+  "series_id" INT
+  "created_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    (user_id, movie_id, series_id) [unique, name: "unique_favorite"]
+    user_id [name: "IX_favorites_user"]
+  }
+}
+
+Table "ratings" {
+  "id" INT [pk, increment]
+  "user_id" INT [not null]
+  "movie_id" INT
+  "series_id" INT
+  "rating" INT [not null]
+  "review" NTEXT
+  "created_at" DATETIME2 [default: `GETDATE()`]
+  "updated_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    (user_id, movie_id, series_id) [unique, name: "unique_rating"]
+  }
+}
+
+Table "comments" {
+  "id" INT [pk, increment]
+  "user_id" INT [not null]
+  "movie_id" INT
+  "series_id" INT
+  "episode_id" INT
+  "parent_id" INT
+  "content" NTEXT [not null]
+  "like_count" INT [default: 0]
+  "dislike_count" INT [default: 0]
+  "is_approved" BIT [default: 1]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+  "updated_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    movie_id [name: "IX_comments_movie"]
+    series_id [name: "IX_comments_series"]
+    episode_id [name: "IX_comments_episode"]
+  }
+}
+
+Table "reactions" {
+  "id" INT [pk, increment]
+  "user_id" INT [not null]
+  "comment_id" INT [not null]
+  "reaction_type" reactions_reaction_type_enum [not null]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+  "updated_at" DATETIME2 [default: `GETDATE()`]
+
+  Indexes {
+    (user_id, comment_id) [unique, name: "unique_reaction"]
+  }
+}
+
+Table "notifications" {
+  "id" INT [pk, increment]
+  "user_id" INT [not null]
+  "title" NVARCHAR(255) [not null]
+  "message" NTEXT [not null]
+  "type" notifications_type_enum [default: 'system']
+  "is_read" BIT [default: 0]
+  "created_at" DATETIME2 [default: `GETDATE()`]
+}
+
+Table "banners" {
+  "id" INT [pk, increment]
+  "title" NVARCHAR(255) [not null]
+  "image_url" NVARCHAR(255) [not null]
+  "link_url" NVARCHAR(255)
+  "movie_id" INT
+  "series_id" INT
+  "position" INT [default: 1]
+  "is_active" BIT [default: 1]
+  "start_date" DATE
+  "end_date" DATE
+  "created_at" DATETIME2 [default: `GETDATE()`]
+}

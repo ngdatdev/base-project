@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Common.Middleware;
 
 /// <summary>
-///     Global Exception Handler
+/// Global Exception Handler
 /// </summary>
 public sealed class GlobalExceptionHandler
 {

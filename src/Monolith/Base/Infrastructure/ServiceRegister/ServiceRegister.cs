@@ -42,7 +42,7 @@ public static class ServiceRegister
         services.AddSMSServices(configuration);
         services.AddVietQRCodeService();
         services.AddStorageServices(configuration);
-        services.AddBackgroundServices(configuration);
+        // services.AddBackgroundServices(configuration);
         // services.AddPayOSService(configuration);
         // services.AddVNPayService(configuration);
     }

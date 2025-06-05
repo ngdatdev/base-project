@@ -28,7 +28,6 @@
     <Folder Include="Abstractions\HealthChecks\" />
     <Folder Include="Abstractions\Interceptors\" />
     <Folder Include="Abstractions\Observability\Logging\" />
-    <Folder Include="Abstractions\MessageBrokers\" />
     <Folder Include="Abstractions\Observability\Monitoring\" />
     <Folder Include="Abstractions\Observability\Metric\" />
     <Folder Include="Abstractions\Observability\Tracing\" />
